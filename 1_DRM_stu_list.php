@@ -6,38 +6,63 @@
     session_start();
     if(isset($_COOKIE["PHPSESSID"])){
     session_id($_COOKIE["PHPSESSID"]);
-    if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
-
-    if(isset($_POST["submit"])&&$_POST["submit"]){
-        $dt = new DateTime();
-        $dt->format('Y-m-d H:i:s');
-        $sqlAddStu="INSERT INTO `user` (UserId,LoginName,LoginPwd,UserName,Sex,Email,Tel,RoomId,`Right`,CreateDate,UpdateDate)
- VALUES 
- (NULL,
-  '".$_POST["LoginName"]."',
-  '".sha1("123456")."',
-   '".$_POST["UserName"]."',
-   '".$_POST["Sex"]."',
-    '".$_POST["Email"]."',
-     '".$_POST["Tel"]."',
-      '".$_POST["RoomId"]."',
-       1,
-        '".date('Y-m-d H:i:s')."', 
-        '".date('Y-m-d H:i:s')."')";
-        if(mysqli_query($db,$sqlAddStu)){
-            $sql="UPDATE `bedroom` SET `UserNum` = `UserNum` +1 WHERE `bedroom`.`RoomId` = ".$_POST["RoomId"];
-            mysqli_query($db,$sql);
-echo 2;
-        }else {
-            echo $sqlAddStu;
-            ?>
-            <script>
-                alert("数据不能为空！");
+    if(isset($_SESSION["right"])&&$_SESSION["right"]==0) {
+        if (isset($_POST["submit"]) && $_POST["submit"]) {
+            $stu_ID = $_POST["stu_ID"];
+            if ($_POST["submit"] == "新建") {
+                $dor_ID = $_POST["dor_ID"];
+                $room_ID = $_POST["room_ID"];
+                $stu_name = $_POST["stu_name"];
+                $stu_sex = $_POST["stu_sex"];
+                //插入
+                $sqlExsRoom = "SELECT * FROM `tbl_room` WHERE dor_ID ='$dor_ID' AND room_ID = '$room_ID'";
+            if ($resSER = mysqli_query($db, $sqlExsRoom)) {
+            if (mysqli_num_rows($resSER)) {
+                $sqlAddStu = "INSERT INTO `tbl_student` (`stu_ID`, `stu_userName`, `stu_password`, `stu_sex`, `stu_name`, `stu_state`, `stu_class`) VALUES ('$stu_ID', '$stu_ID', '123456', '$stu_sex', '$stu_name', '1', '" . mb_substr($stu_ID, 0, 8, 'utf-8') . "');
+INSERT INTO `tbl_stu_dor` (`stu_ID`, `dor_ID`, `room_ID`) VALUES ('$stu_ID', '$dor_ID', '$room_ID');";
+            if (mysqli_multi_query($db, $sqlAddStu)) {
+                ?>
+                <script>alert("新建成功!");
                 window.location = "1_DRM_stu_list.php";
-            </script>
+                </script><?php
+            }
+            else {
+            ?>
+                <script>
+                    alert("数据不能为空！");
+                    window.location = "1_DRM_stu_list.php";
+                </script>
             <?php
+            }
+            }
+            else{
+            ?>
+                <script>
+                    alert("宿舍不存在！");
+                    window.location = "1_DRM_stu_list.php";
+                </script>
+            <?php
+            }
+            }
+            }
+            else if ($_POST["submit"] == "删除") {
+            //删除
+            $sqlDelStu = "DELETE FROM `tbl_student` WHERE `tbl_student`.`stu_ID` = '$stu_ID';";
+            if (mysqli_query($db, $sqlDelStu)) { ?>
+                <script>alert("删除成功!");</script>
+            <?php
+            } else { ?>
+                <script>
+                    alert("执行异常！");
+                    window.location = "1_DRM_stu_list.php";
+                </script>
+                <?php
+            }
+            }
+            else if ($_POST["submit"] == "编辑") {
+                echo "222";
+            }
         }
-    }
     ?>
 </head>
 <body class="">   
@@ -74,31 +99,35 @@ echo 2;
           <th width="253">学号</th>
           <th width="271">姓名</th>
           <th width="209">性别</th>
-            <th width="209">寝室</th>
+            <th width="209">楼号</th>
+            <th width="209">寝室号</th>
           <th width="190">&nbsp;</th>
           <th width="39" style="width: 26px;"></th>
         </tr>
       </thead>
       <tbody>
       <?php
-      $sqlAllStudents="SELECT * FROM user WHERE `Right`=1";
-if($resAS=mysqli_query($db,$sqlAllStudents)){
-    while ($rows=mysqli_fetch_assoc($resAS)){
+      $sqlAllStudents="SELECT tbl_student.stu_ID,tbl_student.stu_name,tbl_student.stu_sex,tbl_dormitory.dor_address,tbl_stu_dor.room_ID FROM tbl_student
+LEFT JOIN tbl_stu_dor ON tbl_student.stu_ID = tbl_stu_dor.stu_ID 
+JOIN tbl_dormitory ON tbl_dormitory.dor_ID = tbl_stu_dor.dor_ID
+WHERE stu_state = '1' ORDER BY tbl_student.stu_ID";
+if($resAS=mysqli_query($db,$sqlAllStudents)) {
+    while ($rows = mysqli_fetch_assoc($resAS)) {
         echo "<tr>";
-        echo "<td>".$rows["LoginName"]."</td>";
-        echo "<td>".$rows["UserName"]."</td>";
-        $sex=$rows["Sex"]?"女":"男";
-        echo "<td>".$sex."</td>";
-        echo "<td>".$rows["RoomId"]."</td>";
-        echo "<td><a href='1_DRM_stu_detail.php?stu=".$rows["LoginName"]."'>详细信息</a></td>";
+        echo "<td>" . $rows["stu_ID"] . "</td>";
+        echo "<td>" . $rows["stu_name"] . "</td>";
+        $sex = $rows["stu_sex"] ? "女" : "男";
+        echo "<td>" . $sex . "</td>";
+        echo "<td>" . $rows["dor_address"] . "</td>";
+        echo "<td>" . $rows["room_ID"] . "</td>";
+        echo "<td><a href='1_DRM_stu_detail.php?stu=" . $rows["stu_ID"] . "'>详细信息</a></td>";
         echo "<td>";
         ?>
-        <form action="del.php" method="post">
-        <input type="hidden" name="UserId" value="<?php echo $rows["UserId"];?>">
-        <input type="hidden" name="type" value="stu">
+        <form action="1_DRM_stu_list.php" method="post">
+        <input type="hidden" name="stu_ID" value="<?php echo $rows["stu_ID"]; ?>">
         <input type="submit" class="btn btn-danger" onclick="return confirm('确定要删除吗?');" name="submit" value="删除">
         </form><?php
-         echo " </td>";
+        echo " </td>";
         echo "</tr>";
     }
 }
@@ -131,20 +160,25 @@ if($resAS=mysqli_query($db,$sqlAllStudents)){
     <div class="modal-body">
     <form id="tab" action="1_DRM_stu_list.php" method="post">
      	<label>学号</label>
-        <input type="text" name="LoginName" value="" class="input-xlarge">
+        <input type="text" name="stu_ID" value="" class="input-xlarge">
         <label>姓名</label>
-        <input type="text" name="UserName" value="" class="input-xlarge">
+        <input type="text" name="stu_name" value="" class="input-xlarge">
         <label>性别</label>
-        <select name="Sex">
+        <select name="stu_sex" class="input-xlarge">
         	<option value="0">男</option>
             <option value="1">女</option>
         </select>
-        <label>电子邮箱</label>
-        <input type="text" name="Email" value="" class="input-xlarge">
-        <label>电话</label>
-        <input type="text" name="Tel" value="" class="input-xlarge">
+        <label>楼号</label>
+        <select name="dor_ID" class="input-xlarge">
+            <?php $selectDor = "select * from tbl_dormitory";
+            if($selDor = mysqli_query($db,$selectDor)){
+                while($rows = mysqli_fetch_assoc($selDor)){
+                    echo "<option value=".$rows["dor_ID"].">".$rows["dor_address"]."</option>";
+                }
+            }?>
+        </select>
         <label>寝室号</label>
-        <input type="text" name="RoomId" value="" class="input-xlarge">
+        <input type="text" name="room_ID" value="" class="input-xlarge">
         <div class="modal-footer">
             <button class="btn" id="btn_change_cancle" data-dismiss="modal" aria-hidden="true">取消</button>
             <input type="submit" name="submit" class="btn btn-danger" id="btn_change_sava"  value="新建">

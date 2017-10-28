@@ -7,13 +7,40 @@
     if(isset($_COOKIE["PHPSESSID"])){
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&& $_SESSION["right"]==0){
-    if(isset($_POST["submit"])&&$_POST["submit"]){
-        $sqlAddStu="INSERT INTO `tbl_room` (`dor_ID`, `room_ID`, `room_num`) VALUES  (
-'".$_POST["dor_ID"]."',
-'".$_POST["room_ID"]."',
-'".$_POST["room_num"]."')";
-        if(mysqli_query($db,$sqlAddStu)){
-        }
+    if(isset($_POST["submit"])&&$_POST["submit"]) {
+        if ($_POST["submit"] == "新建") {
+    $dor_ID = $_POST["dor_ID"];
+    $room_ID = $_POST["room_ID"];
+    $room_num = $_POST["room_num"];
+    $sqlAddStu = "INSERT INTO `tbl_room` (`dor_ID`, `room_ID`, `room_num`) VALUES  ('$dor_ID','$room_ID','$room_num')";
+    if (mysqli_query($db, $sqlAddStu)) { ?>
+        <script>alert("新建成功!");</script>
+    <?php
+    } else {
+    echo $sqlAddStu;
+    ?>
+        <script>alert("数据不能为空！");
+            window.location = "1_DRM_stu_list.php";</script>
+    <?php
+    }
+    }
+    else if ($_POST["submit"] == "删除") {
+    $dor_ID = $_POST["dor_ID"];
+    $room_ID = $_POST["room_ID"];
+    $sqlDelStu = "DELETE FROM `tbl_room` WHERE `tbl_room`.`dor_ID` = $dor_ID AND `tbl_room`.`room_ID` =  $room_ID";
+    if (mysqli_query($db, $sqlDelStu)) {?>
+        <script>alert("删除成功!");</script>
+    <?php
+    } else {
+    echo $sqlDelStu;
+    ?>
+        <script>alert("数据不能为空！");
+            window.location = "1_DRM_stu_list.php";</script><?php
+    }
+    }
+    else if ($_POST["submit"] == "修改") {
+        echo "222";
+    }
     }
     ?>
 </head>
@@ -57,7 +84,11 @@
       </thead>
       <tbody>
       <?php
-      $sqlAllRoom="SELECT *,(select COUNT(*) FROM tbl_stu_dor GROUP BY(room_ID)) nov_num FROM tbl_dormitory,tbl_room,tbl_stu_dor where tbl_dormitory.dor_ID=tbl_room.dor_ID ORDER BY tbl_dormitory.dor_ID";
+      $sqlAllRoom="SELECT tbl_dormitory.dor_address,tbl_room.dor_ID,tbl_room.room_ID,tbl_room.room_num,
+(select COUNT(*) FROM tbl_stu_dor WHERE room_ID = tbl_room.room_ID AND dor_ID = tbl_room.dor_ID) nov_num
+FROM tbl_dormitory,tbl_room
+where tbl_dormitory.dor_ID=tbl_room.dor_ID
+ORDER BY tbl_dormitory.dor_ID";
       if($resAR=mysqli_query($db,$sqlAllRoom)){
           while ($rows=mysqli_fetch_assoc($resAR)){
               echo "<tr>";
@@ -68,9 +99,9 @@
               echo "<td><a href='1_DRM_dor_detail.php?dor=".$rows["room_ID"]."'>详细信息</a></td>";
               echo "<td>";
               ?>
-              <form action="del.php" method="post">
-              <input type="hidden" name="RoomId" value="<?php echo $rows["room_ID"];?>">
-              <input type="hidden" name="type" value="dor">
+              <form action="1_DRM_dor_list.php" method="post">
+              <input type="hidden" name="dor_ID" value="<?php echo $rows["dor_ID"];?>">
+              <input type="hidden" name="room_ID" value="<?php echo $rows["room_ID"];?>">
               <input type="submit" class="btn btn-danger" onclick="return confirm('确定要删除吗?');" name="submit" value="删除">
               </form><?php
               echo " </td>";
@@ -117,6 +148,7 @@
         <input type="text" name="room_num" value="" class="input-xlarge">
         <label></label>
         <input type="hidden" name="RoomName" value="useless" class="input-xlarge">
+        <input type="hidden" name="type" value="insert">
         <div class="modal-footer">
             <button class="btn" id="btn_change_cancle" data-dismiss="modal" aria-hidden="true">取消</button>
             <input type="submit" name="submit" class="btn btn-danger" id="btn_change_sava"  value="新建">

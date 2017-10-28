@@ -23,7 +23,7 @@
     </div>
 
     <ul class="breadcrumb">
-        <li><a href="1_DRM_index.php">返回首页</a> /<a href="1_DRM_feed_list.php">费用信息</a> /<span
+        <li><a href="1_DRM_index.php">返回首页</a> /<a href="1_DRM_turn_list.php">费用信息</a> /<span
                     class="divider">详细信息</span>
         </li>
     </ul>

@@ -102,7 +102,7 @@
     <column id="37" parent="18" name="room_ID">
       <Position>2</Position>
       <Comment>寝室号</Comment>
-      <DataType>tinyint(3)|0</DataType>
+      <DataType>int(3)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="38" parent="18" name="room_num">
@@ -124,7 +124,7 @@ room_ID</ColNames>
     <column id="41" parent="19" name="sco_score">
       <Position>2</Position>
       <Comment>成绩</Comment>
-      <DataType>int(3)|0</DataType>
+      <DataType>double(2,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="42" parent="19" name="sco_tea_ID">
@@ -148,12 +148,16 @@ room_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_student</RefTableName>
       <RefColNames>stu_ID</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>delete</OnDelete>
     </foreign-key>
     <foreign-key id="47" parent="19" name="sco_tea_ID">
       <ColNames>sco_tea_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_teacher</RefTableName>
       <RefColNames>tea_ID</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>no-action</OnDelete>
     </foreign-key>
     <column id="48" parent="20" name="stu_ID">
       <Position>1</Position>
@@ -165,168 +169,191 @@ room_ID</ColNames>
       <DataType>int(2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="50" parent="20" name="dor_ID">
+    <column id="50" parent="20" name="room_ID">
+      <Position>3</Position>
+      <DataType>int(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="51" parent="20" name="dor_ID">
       <ColNames>dor_ID</ColNames>
     </index>
-    <index id="51" parent="20" name="stu_ID">
+    <index id="52" parent="20" name="stu_ID">
       <ColNames>stu_ID</ColNames>
     </index>
-    <foreign-key id="52" parent="20" name="stu_id_dor">
+    <index id="53" parent="20" name="dor_ID_2">
+      <ColNames>dor_ID
+room_ID</ColNames>
+    </index>
+    <index id="54" parent="20" name="room_ID">
+      <ColNames>room_ID</ColNames>
+    </index>
+    <foreign-key id="55" parent="20" name="stu_id_dor">
       <ColNames>stu_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_student</RefTableName>
       <RefColNames>stu_ID</RefColNames>
+      <OnUpdate>no-action</OnUpdate>
+      <OnDelete>delete</OnDelete>
     </foreign-key>
-    <foreign-key id="53" parent="20" name="dor_id_stu">
-      <ColNames>dor_ID</ColNames>
-      <RefSchemaName>das</RefSchemaName>
-      <RefTableName>tbl_dormitory</RefTableName>
-      <RefColNames>dor_ID</RefColNames>
-    </foreign-key>
-    <column id="54" parent="21" name="stu_ID">
+    <column id="56" parent="21" name="stu_ID">
       <Position>1</Position>
       <Comment>学生学号</Comment>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="21" name="stu_userName">
+    <column id="57" parent="21" name="stu_userName">
       <Position>2</Position>
       <Comment>用户名</Comment>
       <DataType>char(16)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="56" parent="21" name="stu_password">
+    <column id="58" parent="21" name="stu_password">
       <Position>3</Position>
       <Comment>密码</Comment>
       <DataType>char(16)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="57" parent="21" name="stu_sex">
+    <column id="59" parent="21" name="stu_sex">
       <Position>4</Position>
       <Comment>性别(0男1女)</Comment>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="58" parent="21" name="stu_name">
+    <column id="60" parent="21" name="stu_name">
       <Position>5</Position>
       <Comment>学生姓名</Comment>
       <DataType>char(6)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="59" parent="21" name="stu_state">
+    <column id="61" parent="21" name="stu_state">
       <Position>6</Position>
       <Comment>学生状态(0退宿,1在校)</Comment>
       <DataType>tinyint(3)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="60" parent="21" name="stu_class">
+    <column id="62" parent="21" name="stu_class">
       <Position>7</Position>
       <Comment>学生班级</Comment>
       <DataType>char(8)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="61" parent="21" name="PRIMARY">
+    <key id="63" parent="21" name="PRIMARY">
       <ColNames>stu_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="62" parent="22" name="tea_ID">
+    <column id="64" parent="22" name="tea_ID">
       <Position>1</Position>
       <DataType>char(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="63" parent="22" name="dor_ID">
+    <column id="65" parent="22" name="dor_ID">
       <Position>2</Position>
       <DataType>int(2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="64" parent="22" name="dor_ID">
+    <index id="66" parent="22" name="dor_ID">
       <ColNames>dor_ID</ColNames>
     </index>
-    <index id="65" parent="22" name="tea_ID">
+    <index id="67" parent="22" name="tea_ID">
       <ColNames>tea_ID</ColNames>
     </index>
-    <foreign-key id="66" parent="22" name="tea_id">
+    <foreign-key id="68" parent="22" name="tea_id">
       <ColNames>tea_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_teacher</RefTableName>
       <RefColNames>tea_ID</RefColNames>
     </foreign-key>
-    <foreign-key id="67" parent="22" name="dor_id">
+    <foreign-key id="69" parent="22" name="dor_id">
       <ColNames>dor_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_dormitory</RefTableName>
       <RefColNames>dor_ID</RefColNames>
     </foreign-key>
-    <column id="68" parent="23" name="tea_ID">
+    <column id="70" parent="23" name="tea_ID">
       <Position>1</Position>
       <Comment>教师ID</Comment>
       <DataType>char(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="69" parent="23" name="tea_userName">
+    <column id="71" parent="23" name="tea_userName">
       <Position>2</Position>
       <Comment>教师用户名</Comment>
       <DataType>char(16)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="70" parent="23" name="tea_password">
+    <column id="72" parent="23" name="tea_password">
       <Position>3</Position>
       <Comment>教师密码</Comment>
       <DataType>char(16)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="71" parent="23" name="tea_name">
+    <column id="73" parent="23" name="tea_name">
       <Position>4</Position>
       <Comment>教师姓名</Comment>
       <DataType>char(6)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="72" parent="23" name="tea_sex">
+    <column id="74" parent="23" name="tea_sex">
       <Position>5</Position>
       <Comment>教师性别</Comment>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="73" parent="23" name="tea_tel">
+    <column id="75" parent="23" name="tea_tel">
       <Position>6</Position>
       <Comment>教师电话</Comment>
       <DataType>char(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="74" parent="23" name="PRIMARY">
+    <key id="76" parent="23" name="PRIMARY">
       <ColNames>tea_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="75" parent="24" name="upd_ID">
+    <column id="77" parent="24" name="upd_ID">
       <Position>1</Position>
       <DataType>int(16)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="76" parent="24" name="upd_type">
+    <column id="78" parent="24" name="upd_type">
       <Position>2</Position>
       <Comment>0调出，1调入</Comment>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="77" parent="24" name="stu_ID">
+    <column id="79" parent="24" name="stu_ID">
       <Position>3</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="78" parent="24" name="upd_dateTime">
-      <Position>4</Position>
-      <DataType>datetime|0</DataType>
+    <column id="80" parent="24" name="upd_dateTime">
+      <Position>7</Position>
+      <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="79" parent="24" name="stu_ID">
+    <column id="81" parent="24" name="dor_ID">
+      <Position>5</Position>
+      <DataType>int(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="82" parent="24" name="room_ID">
+      <Position>6</Position>
+      <DataType>int(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="83" parent="24" name="stu_name">
+      <Position>4</Position>
+      <DataType>varchar(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="84" parent="24" name="stu_ID">
       <ColNames>stu_ID</ColNames>
     </index>
-    <key id="80" parent="24" name="PRIMARY">
+    <key id="85" parent="24" name="PRIMARY">
       <ColNames>upd_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="81" parent="24" name="upd_stu">
+    <foreign-key id="86" parent="24" name="upd_stu">
       <ColNames>stu_ID</ColNames>
       <RefSchemaName>das</RefSchemaName>
       <RefTableName>tbl_student</RefTableName>

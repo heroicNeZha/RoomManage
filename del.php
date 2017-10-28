@@ -39,7 +39,7 @@ switch ($_POST["type"]){
             ?>
             <script>
                 alert("成功删除！");
-                window.location = "1_DRM_feed_list.php";
+                window.location = "1_DRM_turn_list.php";
             </script>
         <?php
         }
