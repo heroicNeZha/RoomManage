@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="das@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="das">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="dj"/>
+    <schema id="4" parent="1" name="dj_1"/>
+    <schema id="5" parent="1" name="dj_2"/>
+    <schema id="6" parent="1" name="dormitory"/>
+    <schema id="7" parent="1" name="information_schema"/>
+    <schema id="8" parent="1" name="mysql"/>
+    <schema id="9" parent="1" name="performance_schema"/>
+    <schema id="10" parent="1" name="score"/>
+    <schema id="11" parent="1" name="student"/>
+    <schema id="12" parent="1" name="studentunion"/>
+    <schema id="13" parent="1" name="sushe"/>
+    <schema id="14" parent="1" name="sys"/>
+    <schema id="15" parent="1" name="testdatabase"/>
+    <table id="16" parent="2" name="tbl_admin">
+      <Comment>管理员表</Comment>
+    </table>
+    <table id="17" parent="2" name="tbl_dormitory"/>
+    <table id="18" parent="2" name="tbl_room"/>
+    <table id="19" parent="2" name="tbl_score"/>
+    <table id="20" parent="2" name="tbl_stu_dor"/>
+    <table id="21" parent="2" name="tbl_student"/>
+    <table id="22" parent="2" name="tbl_tea_dor"/>
+    <table id="23" parent="2" name="tbl_teacher"/>
+    <table id="24" parent="2" name="tbl_update"/>
+    <column id="25" parent="16" name="admin_ID">
+      <Position>1</Position>
+      <Comment>管理员ID</Comment>
+      <DataType>int(16)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="26" parent="16" name="admin_userName">
+      <Position>2</Position>
+      <Comment>管理员用户名</Comment>
+      <DataType>varchar(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="27" parent="16" name="admin_password">
+      <Position>3</Position>
+      <Comment>管理员密码</Comment>
+      <DataType>varchar(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="28" parent="16" name="admin_name">
+      <Position>4</Position>
+      <Comment>管理员姓名</Comment>
+      <DataType>varchar(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="29" parent="16" name="admin_sex">
+      <Position>5</Position>
+      <Comment>管理员性别(男0女1)</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="16" name="admin_tel">
+      <Position>6</Position>
+      <Comment>管理员电话</Comment>
+      <DataType>varchar(11)|0</DataType>
+    </column>
+    <key id="31" parent="16" name="PRIMARY">
+      <ColNames>admin_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="32" parent="17" name="dor_ID">
+      <Position>1</Position>
+      <Comment>楼号</Comment>
+      <DataType>int(2)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="33" parent="17" name="dor_address">
+      <Position>2</Position>
+      <Comment>地址</Comment>
+      <DataType>varchar(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="17" name="dor_sex">
+      <Position>3</Position>
+      <Comment>性别</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="35" parent="17" name="PRIMARY">
+      <ColNames>dor_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="36" parent="18" name="dor_ID">
+      <Position>1</Position>
+      <Comment>从属楼号</Comment>
+      <DataType>tinyint(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="37" parent="18" name="room_ID">
+      <Position>2</Position>
+      <Comment>寝室号</Comment>
+      <DataType>tinyint(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="18" name="room_num">
+      <Position>3</Position>
+      <Comment>居住人数</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="39" parent="18" name="PRIMARY">
+      <ColNames>dor_ID
+room_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="40" parent="19" name="sco_stu_ID">
+      <Position>1</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="19" name="sco_score">
+      <Position>2</Position>
+      <Comment>成绩</Comment>
+      <DataType>int(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="19" name="sco_tea_ID">
+      <Position>3</Position>
+      <DataType>char(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="43" parent="19" name="sco_dateTime">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="44" parent="19" name="sco_stu_ID">
+      <ColNames>sco_stu_ID</ColNames>
+    </index>
+    <index id="45" parent="19" name="sco_tea_ID">
+      <ColNames>sco_tea_ID</ColNames>
+    </index>
+    <foreign-key id="46" parent="19" name="sco_stu_ID">
+      <ColNames>sco_stu_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_student</RefTableName>
+      <RefColNames>stu_ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="47" parent="19" name="sco_tea_ID">
+      <ColNames>sco_tea_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_teacher</RefTableName>
+      <RefColNames>tea_ID</RefColNames>
+    </foreign-key>
+    <column id="48" parent="20" name="stu_ID">
+      <Position>1</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="20" name="dor_ID">
+      <Position>2</Position>
+      <DataType>int(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="50" parent="20" name="dor_ID">
+      <ColNames>dor_ID</ColNames>
+    </index>
+    <index id="51" parent="20" name="stu_ID">
+      <ColNames>stu_ID</ColNames>
+    </index>
+    <foreign-key id="52" parent="20" name="stu_id_dor">
+      <ColNames>stu_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_student</RefTableName>
+      <RefColNames>stu_ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="53" parent="20" name="dor_id_stu">
+      <ColNames>dor_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_dormitory</RefTableName>
+      <RefColNames>dor_ID</RefColNames>
+    </foreign-key>
+    <column id="54" parent="21" name="stu_ID">
+      <Position>1</Position>
+      <Comment>学生学号</Comment>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="21" name="stu_userName">
+      <Position>2</Position>
+      <Comment>用户名</Comment>
+      <DataType>char(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="21" name="stu_password">
+      <Position>3</Position>
+      <Comment>密码</Comment>
+      <DataType>char(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="57" parent="21" name="stu_sex">
+      <Position>4</Position>
+      <Comment>性别(0男1女)</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="58" parent="21" name="stu_name">
+      <Position>5</Position>
+      <Comment>学生姓名</Comment>
+      <DataType>char(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="59" parent="21" name="stu_state">
+      <Position>6</Position>
+      <Comment>学生状态(0退宿,1在校)</Comment>
+      <DataType>tinyint(3)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="60" parent="21" name="stu_class">
+      <Position>7</Position>
+      <Comment>学生班级</Comment>
+      <DataType>char(8)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="61" parent="21" name="PRIMARY">
+      <ColNames>stu_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="62" parent="22" name="tea_ID">
+      <Position>1</Position>
+      <DataType>char(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="63" parent="22" name="dor_ID">
+      <Position>2</Position>
+      <DataType>int(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="64" parent="22" name="dor_ID">
+      <ColNames>dor_ID</ColNames>
+    </index>
+    <index id="65" parent="22" name="tea_ID">
+      <ColNames>tea_ID</ColNames>
+    </index>
+    <foreign-key id="66" parent="22" name="tea_id">
+      <ColNames>tea_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_teacher</RefTableName>
+      <RefColNames>tea_ID</RefColNames>
+    </foreign-key>
+    <foreign-key id="67" parent="22" name="dor_id">
+      <ColNames>dor_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_dormitory</RefTableName>
+      <RefColNames>dor_ID</RefColNames>
+    </foreign-key>
+    <column id="68" parent="23" name="tea_ID">
+      <Position>1</Position>
+      <Comment>教师ID</Comment>
+      <DataType>char(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="69" parent="23" name="tea_userName">
+      <Position>2</Position>
+      <Comment>教师用户名</Comment>
+      <DataType>char(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="23" name="tea_password">
+      <Position>3</Position>
+      <Comment>教师密码</Comment>
+      <DataType>char(16)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="23" name="tea_name">
+      <Position>4</Position>
+      <Comment>教师姓名</Comment>
+      <DataType>char(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="72" parent="23" name="tea_sex">
+      <Position>5</Position>
+      <Comment>教师性别</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="73" parent="23" name="tea_tel">
+      <Position>6</Position>
+      <Comment>教师电话</Comment>
+      <DataType>char(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="74" parent="23" name="PRIMARY">
+      <ColNames>tea_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="75" parent="24" name="upd_ID">
+      <Position>1</Position>
+      <DataType>int(16)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="76" parent="24" name="upd_type">
+      <Position>2</Position>
+      <Comment>0调出，1调入</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="77" parent="24" name="stu_ID">
+      <Position>3</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="78" parent="24" name="upd_dateTime">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="79" parent="24" name="stu_ID">
+      <ColNames>stu_ID</ColNames>
+    </index>
+    <key id="80" parent="24" name="PRIMARY">
+      <ColNames>upd_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="81" parent="24" name="upd_stu">
+      <ColNames>stu_ID</ColNames>
+      <RefSchemaName>das</RefSchemaName>
+      <RefTableName>tbl_student</RefTableName>
+      <RefColNames>stu_ID</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>
