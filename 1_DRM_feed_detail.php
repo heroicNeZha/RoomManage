@@ -40,7 +40,7 @@
                 $sqlTheFeed = "SELECT * FROM expenses WHERE RoomId='" . $_GET["dor"] . "'";
             }
             if ($resTF = mysqli_query($db, $sqlTheFeed)) {
-                include("footer_DRM_feed_table.php");
+                include("footer_DRM_score_table.php");
             }
 
             ?>

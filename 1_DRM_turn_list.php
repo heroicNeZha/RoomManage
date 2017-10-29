@@ -7,62 +7,83 @@
     if(isset($_COOKIE["PHPSESSID"])){
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
-    if(isset($_POST["submit"])&&$_POST["submit"]){
-        if ($_POST["submit"] == "调入") {
-            $stu_ID = $_POST["stu_ID"];
-            $stu_name = $_POST["stu_name"];
-            $stu_sex = $_POST["stu_sex"];
-            $room_ID = $_POST["room_ID"];
-            $dor_ID = $_POST["dor_ID"];
-            $upd_type = $_POST["upd_type"];
-            $upd_date = $_POST["upd_date"];
-            $sqlAddStu = "INSERT INTO `tbl_student` (`stu_ID`, `stu_userName`, `stu_password`, `stu_sex`, `stu_name`, `stu_state`, `stu_class`) VALUES ('$stu_ID', '$stu_ID', '123456', '$stu_sex', '$stu_name', '1', '" . mb_substr($stu_ID, 0, 8, 'utf-8') . "');
-INSERT INTO `tbl_stu_dor` (`stu_ID`, `dor_ID`, `room_ID`) VALUES ('$stu_ID', '$dor_ID', '$room_ID');
-INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`upd_dateTime`) VALUES  ('$stu_ID','$stu_name','$dor_ID','$room_ID','0','$upd_date');";
-        if (mysqli_multi_query($db, $sqlAddStu)) { ?>
-            <script>alert("新建成功!");
-            window.location = "1_DRM_turn_list.php";</script>
-        <?php
-        } else {
-        echo $sqlAddStu;
-        ?>
-            <script>alert("数据异常！");
-               // window.location = "1_DRM_turn_list.php";</script>
-        <?php
-        }
-        }
-        else if ($_POST["submit"] == "调出") {
+    if(isset($_POST["submit"])&&$_POST["submit"]) {
         $stu_ID = $_POST["stu_ID"];
-        $upd_date = $_POST["upd_date"];
-        //从学生表中提取信息插入到调出表
-        $sqlDelStu = "DELETE FROM `tbl_room` WHERE `tbl_room`.`dor_ID` = $dor_ID AND `tbl_room`.`room_ID` =  $room_ID;
+        $sqlSelectStu = "SELECT `tbl_student`.`stu_ID`,`tbl_student`.`stu_name`,`tbl_student`.`stu_state`, `dor_ID`, `room_ID` FROM tbl_student 
+LEFT JOIN tbl_stu_dor ON tbl_student.stu_ID = tbl_stu_dor.stu_ID Where tbl_student.stu_ID = $stu_ID";
+        if ($resultSS = mysqli_query($db, $sqlSelectStu)) {
+            if ($rowsSS = mysqli_fetch_assoc($resultSS)) {
+                if ($rowsSS["stu_ID"] == null) {
+                    ?>
+                    <script>alert("查无此人!");
+                        window.location = "1_DRM_turn_list.php";</script>
+                <?php
+                }
+                else{
+                if ($_POST["submit"] == "调入") {
+                $stu_name = $rowsSS["stu_name"];
+                $room_ID = $_POST["room_ID"];
+                $dor_ID = $_POST["dor_ID"];
+                $upd_date = $_POST["upd_date"];
+                $sqlAddStu = "INSERT INTO `tbl_stu_dor` (`stu_ID`, `dor_ID`, `room_ID`) VALUES ('$stu_ID', '$dor_ID', '$room_ID');
+INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`upd_dateTime`) VALUES  ('$stu_ID','$stu_name','$dor_ID','$room_ID','0','$upd_date');";
+                if (mysqli_multi_query($db, $sqlAddStu)) { ?>
+                    <script>alert("新建成功!");
+                        window.location = "1_DRM_turn_list.php";</script>
+                <?php
+                } else {
+                echo $sqlAddStu;
+                ?>
+                    <script>alert("数据异常！");
+                        // window.location = "1_DRM_turn_list.php";</script>
+                <?php
+                }
+                }
+                else if ($_POST["submit"] == "调出") {
+                $room_ID = $rowsSS["room_ID"];
+                if ($room_ID == null){
+                ?>
+                    <script>alert("尚未入住!");
+                        window.location = "1_DRM_turn_list.php";</script>
+                <?php
+                }else{
+                $stu_ID = $_POST["stu_ID"];
+                $stu_name = $rowsSS["stu_name"];
+                $dor_ID = $rowsSS["dor_ID"];
+                $upd_date = $_POST["upd_date"];
+                $sqlDelStu = "DELETE FROM `tbl_stu_dor` WHERE tbl_stu_dor.stu_ID = $stu_ID;
         INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`upd_dateTime`) VALUES  ('$stu_ID','$stu_name','$dor_ID','$room_ID','1','$upd_date');";
-        if (mysqli_query($db, $sqlDelStu)) {?>
-            <script>alert("调出成功!"); window.location = "1_DRM_turn_list.php";</script>
-        <?php
-        } else {
-        echo $sqlDelStu;
-        ?>
-            <script>alert("数据不能为空！");
-                window.location = "1_DRM_turn_list.php";</script><?php
-        }
-        }
-        else if ($_POST["submit"] == "删除") {
-        $dor_ID = $_POST["dor_ID"];
-        $room_ID = $_POST["room_ID"];
-        $sqlDelStu = "DELETE FROM `tbl_room` WHERE `tbl_room`.`dor_ID` = $dor_ID AND `tbl_room`.`room_ID` =  $room_ID";
-        if (mysqli_query($db, $sqlDelStu)) {?>
-            <script>alert("删除成功!");</script>
-        <?php
-        } else {
-        echo $sqlDelStu;
-        ?>
-            <script>alert("数据不能为空！");
-                window.location = "1_DRM_stu_list.php";</script><?php
-        }
-        }
-        else if ($_POST["submit"] == "修改") {
-            echo "222";
+                if (mysqli_multi_query($db, $sqlDelStu)) { ?>
+                    <script>alert("调出成功!");
+                        window.location = "1_DRM_turn_list.php";</script>
+                <?php
+                } else {
+                echo $sqlDelStu;
+                ?>
+                    <script>alert("数据不能为空！");
+                        //window.location = "1_DRM_turn_list.php";</script><?php
+                }
+                }
+                }
+                else if ($_POST["submit"] == "删除") {
+                $dor_ID = $_POST["dor_ID"];
+                $room_ID = $_POST["room_ID"];
+                $sqlDelStu = "DELETE FROM `tbl_room` WHERE `tbl_room`.`dor_ID` = $dor_ID AND `tbl_room`.`room_ID` =  $room_ID";
+                if (mysqli_query($db, $sqlDelStu)) { ?>
+                    <script>alert("删除成功!");</script>
+                <?php
+                } else {
+                echo $sqlDelStu;
+                ?>
+                    <script>alert("数据不能为空！");
+                        window.location = "1_DRM_stu_list.php";</script><?php
+                }
+                }
+                else if ($_POST["submit"] == "修改") {
+                    echo "222";
+                }
+                }
+            }
         }
     }
     ?>
@@ -83,8 +104,8 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="btn-toolbar">
-                <button class="btn btn-primary"><a href="#turnIn" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-plus"></i>调入</font></a></button>
-                <button class="btn btn-primary"><a href="#turnOut" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-minus"></i>调出</font></a></button>
+                <button class="btn btn-primary"><a href="#turnIn" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-plus"></i>入住</font></a></button>
+                <button class="btn btn-primary"><a href="#turnOut" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-minus"></i>退寝</font></a></button>
             </div>
             <!--搜索框-->
             <div class="search-well">
@@ -157,19 +178,12 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
     <div class="modal small hide fade" id="turnIn" tabindex="10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">调入学生</h3>
+            <h3 id="myModalLabel">学生入住</h3>
         </div>
         <div class="modal-body">
             <form id="tab" action="1_DRM_turn_list.php" method="post">
                 <label>学号</label>
                 <input type="text" name="stu_ID" value="" class="input-xlarge">
-                <label>姓名</label>
-                <input type="text" name="stu_name" value="" class="input-xlarge">
-                <label>性别</label>
-                <select name="stu_sex" class="input-xlarge">
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select>
                 <label>目标楼号</label>
                 <select name="dor_ID" class="input-xlarge">
                     <?php $selectDor = "select * from tbl_dormitory";
@@ -197,14 +211,14 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
     <div class="modal small hide fade" id="turnOut" tabindex="10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">调出学生</h3>
+            <h3 id="myModalLabel">学生退宿</h3>
         </div>
         <div class="modal-body">
             <form id="tab" action="1_DRM_turn_list.php" method="post">
                 <label>学号</label>
-                <input type="text" name="room_ID" value="" class="input-xlarge">
+                <input type="text" name="stu_ID" value="" class="input-xlarge">
                 <label>日期</label>
-                <input type="date" name="upd_type" value="" class="input-xlarge">
+                <input type="date" name="upd_date" value="" class="input-xlarge">
                 <div class="modal-footer">
                     <button class="btn" id="btn_change_cancle" data-dismiss="modal" aria-hidden="true">取消</button>
                     <input type="submit" name="submit" class="btn btn-danger" id="btn_change_sava"  value="调出">

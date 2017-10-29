@@ -109,7 +109,7 @@ INSERT INTO `tbl_stu_dor` (`stu_ID`, `dor_ID`, `room_ID`) VALUES ('$stu_ID', '$d
       <?php
       $sqlAllStudents="SELECT tbl_student.stu_ID,tbl_student.stu_name,tbl_student.stu_sex,tbl_dormitory.dor_address,tbl_stu_dor.room_ID FROM tbl_student
 LEFT JOIN tbl_stu_dor ON tbl_student.stu_ID = tbl_stu_dor.stu_ID 
-JOIN tbl_dormitory ON tbl_dormitory.dor_ID = tbl_stu_dor.dor_ID
+LEFT JOIN tbl_dormitory ON tbl_dormitory.dor_ID = tbl_stu_dor.dor_ID
 WHERE stu_state = '1' ORDER BY tbl_student.stu_ID";
 if($resAS=mysqli_query($db,$sqlAllStudents)) {
     while ($rows = mysqli_fetch_assoc($resAS)) {

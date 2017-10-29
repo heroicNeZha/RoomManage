@@ -7,8 +7,8 @@
     if(isset($_COOKIE["PHPSESSID"])){
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
-    if(isset($_GET["dor"])){
-    $sqlTheDor="SELECT * FROM bedroom WHERE RoomId='".$_GET["dor"]."'";
+    if(isset($_GET["dor_ID"])&&isset($_GET["room_ID"])){
+    $sqlTheDor="SELECT * FROM tbl_stu_dor WHERE room_ID='".$_GET["room_ID"]."' AND dor_ID='".$_GET["dor_ID"]."'";
 
     ?>
 </head>
@@ -32,8 +32,41 @@
         <div class="row-fluid">
 
             <?php
-            if($resTD=mysqli_query($db,$sqlTheDor)){
-                include("footer_DRM_dor_table.php");
+            if($resTD=mysqli_query($db,$sqlTheDor)) {
+                ?>
+                <div class="well">
+                <div align="center">
+                <table width="668" border="1">
+                <tbody>
+
+                <?php
+                while ($rowsTD = mysqli_fetch_assoc($resTD)) {
+                    ?>
+
+                    <tr align="center">
+                        <td width="125">寝室号</td>
+                        <td width="95" colspan="1">&nbsp;<?php echo $rowsTD["room_ID"]; ?></td>
+                        <td width="74">创建日期</td>
+                        <td width="87">&nbsp;<?php echo $rowsTD["CreateDate"]; ?></td>
+                    </tr>
+                    <tr align="center">
+                        <td>应住人数</td>
+                        <td colspan="5"><?php echo $rowsTD["Number"]; ?></td>
+                    </tr>
+                    <tr align="center">
+                        <td>实住人数</td>
+                        <td colspan="5"><?php echo $rowsTD["UserNum"]; ?></td>
+                    </tr>
+                    <tr align="center">
+                        <td>最后更新日期</td>
+                        <td colspan="5">&nbsp;<?php echo $rowsTD["UpdateDate"]; ?></td>
+                    </tr>
+                    </tbody>
+                    </table>
+
+                    </div>
+                    </div><?php
+                }
             }
             else{
                 echo "查无此人！";

@@ -22,7 +22,7 @@
         ?>
         <div class="well">
             <div align="center">
-                <table width="668" height="100" border="1">
+                <table width="668" border="1">
                     <tbody>
                     <?php
                     while ($rowsTF = mysqli_fetch_assoc($resTF)) {
@@ -35,9 +35,11 @@
                         </tr>
                         <tr align="center">
                             <th >查寝老师</th>
-                            <td >&nbsp;<?php echo $rowsTF["tea_name"]; ?></td>
+                            <td  colspan="5">&nbsp;<?php echo $rowsTF["tea_name"]; ?></td>
+                        </tr>
+                        <tr align="center">
                             <th >查寝时间</th>
-                            <td >&nbsp;<?php echo $rowsTF["sco_dateTime"]; ?></td>
+                            <td  colspan="5">&nbsp;<?php echo $rowsTF["sco_dateTime"]; ?></td>
                         </tr>
                         <?php
                     }

@@ -16,6 +16,9 @@
     <!-- Demo page code -->
 
     <style type="text/css">
+        tr{
+            height: 50px;
+        }
         #line-chart {
             height:300px;
             width:800px;

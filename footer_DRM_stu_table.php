@@ -12,27 +12,18 @@
             if ($rowsTS=mysqli_fetch_assoc($resTS)){
                 echo "<tr align='center'>";
               echo "  <td width='125'>姓名</td>";
-                echo "<td width='95'>".$rowsTS["UserName"]."</td>";
+                echo "<td width='95'>".$rowsTS["stu_name"]."</td>";
                 echo "<td width='82'>性别</td>";
-                $sex=$rowsTS["Sex"]?"女":"男";
+                $sex=$rowsTS["stu_sex"]?"女":"男";
                 echo "<td width='83'>".$sex."</td>";
-                echo "<td width='74'>创建日期</td>";
-                echo "<td width='87'>".$rowsTS["CreateDate"]."</td>";
-                echo '<tr align="center">';
-                echo '<td>电子邮箱</td>';
-                echo '<td colspan="5">'.$rowsTS["Email"].'</td>';
             echo '</tr>';
             echo '<tr align="center">';
-            echo '    <td>联系电话</td>';
-            echo '    <td colspan="5">'.$rowsTS["Tel"].'</td>';
+            echo '    <td>楼号</td>';
+            echo '    <td colspan="5">'.$rowsTS["dor_ID"].'</td>';
             echo '</tr>';
             echo '<tr align="center">';
-            echo '    <td>寝室</td>';
-            echo '    <td colspan="5">'.$rowsTS["RoomId"].'</td>';
-            echo '</tr>';
-            echo '<tr align="center">';
-            echo '    <td>最后更新日期</td>';
-            echo '    <td colspan="5">'.$rowsTS["UpdateDate"].'</td>';
+            echo '    <td>宿舍号</td>';
+            echo '    <td colspan="5">'.$rowsTS["room_ID"].'</td>';
             echo '</tr>';
             }
             ?>

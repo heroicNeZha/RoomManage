@@ -17,12 +17,13 @@
         <h1 class="page-title">寝室信息</h1>
     </div>
     <?php
-    $sqlTheDor = "SELECT * FROM user,bedroom WHERE user.RoomId=bedroom.RoomId AND LoginName='" . $_GET["LoginName"] . "'";
+    $stu_ID = $_GET["LoginName"];
+    $sqlTheDor = "SELECT *,(select COUNT(*) FROM tbl_stu_dor WHERE room_ID = tbl_room.room_ID AND dor_ID = tbl_room.dor_ID) now_num FROM tbl_stu_dor LEFT JOIN tbl_room ON tbl_stu_dor.room_ID = tbl_room.room_ID AND tbl_stu_dor.dor_ID = tbl_room.dor_ID LEFT JOIN tbl_dormitory ON tbl_room.dor_ID= tbl_dormitory.dor_ID WHERE stu_ID = $stu_ID";
     if ($resTD = mysqli_query($db, $sqlTheDor)) {
         ?>
         <div class="well">
             <div align="center">
-                <table width="668" height="134" border="1">
+                <table width="668" border="1">
                     <tbody>
 
                     <?php
@@ -30,22 +31,18 @@
                         ?>
 
                         <tr align="center">
-                            <td width="125">寝室号</td>
-                            <td width="95" colspan="1">&nbsp;<?php echo $rowsTD["RoomId"]; ?></td>
-                            <td width="74">创建日期</td>
-                            <td width="87">&nbsp;<?php echo $rowsTD["CreateDate"]; ?></td>
+                            <th width="125">楼号</th>
+                            <td width="95" colspan="1">&nbsp;<?php echo $rowsTD["dor_address"]; ?></td>
+                            <th width="74">寝室号</th>
+                            <td width="87">&nbsp;<?php echo $rowsTD["room_ID"]; ?></td>
                         </tr>
                         <tr align="center">
-                            <td>应住人数</td>
-                            <td colspan="5"><?php echo $rowsTD["Number"]; ?></td>
+                            <th>应住人数</th>
+                            <td colspan="5"><?php echo $rowsTD["room_num"]; ?></td>
                         </tr>
                         <tr align="center">
-                            <td>实住人数</td>
-                            <td colspan="5"><?php echo $rowsTD["UserNum"]; ?></td>
-                        </tr>
-                        <tr align="center">
-                            <td>最后更新日期</td>
-                            <td colspan="5">&nbsp;<?php echo $rowsTD["UpdateDate"]; ?></td>
+                            <th>实住人数</th>
+                            <td colspan="5"><?php echo $rowsTD["now_num"]; ?></td>
                         </tr>
                         <?php
                     }

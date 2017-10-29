@@ -134,7 +134,7 @@ room_ID</ColNames>
     </column>
     <column id="43" parent="19" name="sco_dateTime">
       <Position>4</Position>
-      <DataType>datetime|0</DataType>
+      <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="44" parent="19" name="sco_stu_ID">

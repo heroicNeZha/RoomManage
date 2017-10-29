@@ -7,8 +7,8 @@
     if(isset($_COOKIE["PHPSESSID"])){
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
-        if(isset($_GET["stu"])){
-$sqlTheStudent="SELECT * FROM user WHERE LoginName='".$_GET["stu"]."'";
+    if(isset($_GET["stu"])){
+    $sqlTheStudent="SELECT * FROM tbl_student WHERE tbl_student.stu_ID='".$_GET["stu"]."'";
 
     ?>
 </head>
@@ -31,17 +31,11 @@ $sqlTheStudent="SELECT * FROM user WHERE LoginName='".$_GET["stu"]."'";
 
     <div class="container-fluid">
         <div class="row-fluid">
-
-
             <?php
             if($resTS=mysqli_query($db,$sqlTheStudent)){
                 include("footer_DRM_stu_table.php");
             }
-             ?>
-
-
-            <?php include("footer_bottom.php"); ?>
-
+            include("footer_bottom.php"); ?>
         </div>
     </div>
 </div>

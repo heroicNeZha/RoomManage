@@ -16,7 +16,7 @@
          <li><a href="3_DRM_index.php?LoginName=<?php echo $_GET["LoginName"]?>">首页</a></li>
          <li><a href="3_DRM_dor_list.php?LoginName=<?php echo $_GET["LoginName"]?>">寝室信息</a></li>
          <li><a href="3_DRM_stu_list.php?LoginName=<?php echo $_GET["LoginName"]?>">学生信息</a></li>
-         <li><a href="3_DRM_feed_list.php?LoginName=<?php echo $_GET["LoginName"]?>">成绩信息</a></li>
+         <li><a href="3_DRM_score_list.php?LoginName=<?php echo $_GET["LoginName"]?>">成绩信息</a></li>
          <li><a href="reset-password.php">重置密码</a></li>
          <li><a href="logout.php">退出</a></li>
 

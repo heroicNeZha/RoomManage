@@ -25,12 +25,12 @@ if(mysqli_query($db,$sqlAddNews)){
       <div class="header">
           <div class="stats">
           </div>
-          <h1 class="page-title">你好,管理员</h1>
+          <h1 class="page-title">你好,教师</h1>
       </div>
       <ul class="breadcrumb">
           <li><a href="1_DRM_index.php">返回首页</a> <span class="divider"></span></li>
       </ul>
-      <div class="copyrights"><a href="http://www.neusoft.edu.cn/"  title="官网">沈阳理工大学信息学院官网</a></div>
+      <div class="copyrights"><a href="http://www.sylu.edu.cn/sylusite/"  title="官网">沈阳理工大学信息学院官网</a></div>
       <div class="container-fluid">
           <div class="row-fluid">
 
