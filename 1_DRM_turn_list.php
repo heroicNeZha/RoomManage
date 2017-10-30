@@ -66,9 +66,8 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
                 }
                 }
                 else if ($_POST["submit"] == "删除") {
-                $dor_ID = $_POST["dor_ID"];
-                $room_ID = $_POST["room_ID"];
-                $sqlDelStu = "DELETE FROM `tbl_room` WHERE `tbl_room`.`dor_ID` = $dor_ID AND `tbl_room`.`room_ID` =  $room_ID";
+                $upd_ID = $_POST["upd_ID"];
+                $sqlDelStu = "DELETE FROM `tbl_update` WHERE `tbl_update`.`upd_ID` = $upd_ID ";
                 if (mysqli_query($db, $sqlDelStu)) { ?>
                     <script>alert("删除成功!");</script>
                 <?php
@@ -80,7 +79,7 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
                 }
                 }
                 else if ($_POST["submit"] == "修改") {
-                    echo "222";
+                    echo "没有这个功能";
                 }
                 }
             }
@@ -144,14 +143,14 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
                     echo "<td>".$rows["dor_ID"]."</td>";
                     echo "<td>".$rows["room_ID"]."</td>";
                     echo "<td>";
-                    echo $rows["upd_type"]?"调出":"调入";
+                    echo $rows["upd_type"]?"退寝":"入住";
                     echo "</td>";
                     echo "<td>".$rows["upd_dateTime"]."</td>";
-                    echo "<td><a href='1_DRM_feed_detail.php?dor=".$rows["upd_ID"]."'>详细信息</a></td>";
                     echo "<td>";
                     ?>
                     <form action="1_DRM_turn_list.php" method="post">
-                    <input type="hidden" name="ExpensesId" value="<?php echo $rows["upd_ID"];?>">
+                    <input type="hidden" name="upd_ID" value="<?php echo $rows["upd_ID"];?>">
+                    <input type="hidden" name="stu_ID" value="<?php echo $rows["stu_ID"];?>">
                     <input type="hidden" name="type" value="feed">
                     <input type="submit" class="btn btn-danger" onclick="return confirm('确定要删除吗?');" name="submit" value="删除">
                     </form><?php

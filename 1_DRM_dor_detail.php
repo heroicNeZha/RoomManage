@@ -8,7 +8,12 @@
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
     if(isset($_GET["dor_ID"])&&isset($_GET["room_ID"])){
-    $sqlTheDor="SELECT * FROM tbl_stu_dor WHERE room_ID='".$_GET["room_ID"]."' AND dor_ID='".$_GET["dor_ID"]."'";
+    $room_ID = $_GET["room_ID"];
+    $dor_ID = $_GET["dor_ID"];
+    $sqlTheDor= "SELECT *,(SELECT count(*) FROM tbl_stu_dor WHERE tbl_stu_dor.room_ID = '$room_ID'AND tbl_stu_dor.dor_ID = '$dor_ID') now_num
+FROM tbl_room 
+LEFT JOIN tbl_dormitory ON tbl_dormitory.dor_ID = tbl_room.dor_ID
+WHERE tbl_room.room_ID='$room_ID' AND tbl_room.dor_ID='$dor_ID'";
 
     ?>
 </head>
@@ -44,23 +49,50 @@
                     ?>
 
                     <tr align="center">
-                        <td width="125">寝室号</td>
-                        <td width="95" colspan="1">&nbsp;<?php echo $rowsTD["room_ID"]; ?></td>
-                        <td width="74">创建日期</td>
-                        <td width="87">&nbsp;<?php echo $rowsTD["CreateDate"]; ?></td>
+                        <th width="125">楼号</th>
+                        <td width="95" colspan="1">&nbsp;<?php echo $rowsTD["dor_address"]; ?></td>
+                        <th width="74">寝室号</th>
+                        <td width="87">&nbsp;<?php echo $rowsTD["room_ID"]; ?></td>
                     </tr>
                     <tr align="center">
-                        <td>应住人数</td>
-                        <td colspan="5"><?php echo $rowsTD["Number"]; ?></td>
+                        <th>应住人数</th>
+                        <td colspan=""><?php echo $rowsTD["room_num"]; ?></td>
+                        <th>实住人数</th>
+                        <td colspan=""><?php echo $rowsTD["now_num"]; ?></td>
                     </tr>
-                    <tr align="center">
-                        <td>实住人数</td>
-                        <td colspan="5"><?php echo $rowsTD["UserNum"]; ?></td>
-                    </tr>
-                    <tr align="center">
-                        <td>最后更新日期</td>
-                        <td colspan="5">&nbsp;<?php echo $rowsTD["UpdateDate"]; ?></td>
-                    </tr>
+                    <?php
+                    $selectStu = "SELECT * FROM tbl_stu_dor 
+LEFT JOIN tbl_student ON tbl_stu_dor.stu_ID = tbl_student.stu_ID
+WHERE room_ID = $room_ID AND dor_ID = $dor_ID";
+                    if ($resS = mysqli_query($db,$selectStu)){
+                        $flag = 1;
+                        while ($rowsS = mysqli_fetch_assoc($resS)){
+                            if ($flag) {
+                                ?>
+                                <tr align="center">
+                                    <th colspan="5">宿舍成员</th>
+                                </tr>
+                                <tr align="center">
+                                    <th>学号</th>
+                                    <td colspan=""><?php echo $rowsS["stu_ID"]; ?></td>
+                                    <th>姓名</th>
+                                    <td colspan=""><?php echo $rowsS["stu_name"]; ?></td>
+                                </tr>
+                                <?php
+                                $flag = 0;
+                            }else{
+                                ?>
+                                <tr align="center">
+                                    <th>学号</th>
+                                    <td colspan=""><?php echo $rowsS["stu_ID"]; ?></td>
+                                    <th>姓名</th>
+                                    <td colspan=""><?php echo $rowsS["stu_name"]; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
                     </tbody>
                     </table>
 
@@ -93,6 +125,13 @@
 </body>
 </html>
 <?php
+}else{
+    ?>
+    <script>
+        alert("参数有误！");
+        window.location = "1_DRM_dor_list.php";
+    </script>
+    <?php
 }
 }else{
     ?>

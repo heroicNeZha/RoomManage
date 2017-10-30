@@ -18,7 +18,7 @@
     </div>
     <?php
     $stu_ID = $_GET["LoginName"];
-    $sqlTheStudent = "SELECT * FROM tbl_student LEFT JOIN tbl_stu_dor ON tbl_student.stu_ID = tbl_stu_dor.stu_ID WHERE tbl_student.stu_ID= 1503050116";
+    $sqlTheStudent = "SELECT * FROM tbl_student LEFT JOIN tbl_stu_dor ON tbl_student.stu_ID = tbl_stu_dor.stu_ID WHERE tbl_student.stu_ID=".$_GET['LoginName'];
     if ($resTS = mysqli_query($db, $sqlTheStudent)) {
         ?>
         <div class="well">

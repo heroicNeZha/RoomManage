@@ -43,17 +43,17 @@ WHERE tbl_score.sco_stu_ID='".$_GET["stu"]."'";
                         if($resS=mysqli_query($db,$sqlScore)){
                         if ($rows=mysqli_fetch_assoc($resS)){?>
                             <tr align="center">
-                                <td width="125">学号</td>
+                                <th width="125">学号</th>
                                 <td width="95" colspan="2">&nbsp;<?php echo $rows["sco_stu_ID"];?></td>
-                                <td width="74">姓名</td>
+                                <th width="74">姓名</th>
                                 <td width="87" colspan="2">&nbsp;<?php echo $rows["stu_name"];?></td>
                             </tr>
                             <tr align="center">
-                                <td>成绩</td>
+                                <th>成绩</th>
                                 <td colspan="1">&nbsp;<?php echo $rows["sco_score"];?></td>
-                                <td>老师</td>
+                                <th>老师</th>
                                 <td colspan="1"><?php echo $rows["tea_name"];?>&nbsp;</td>
-                                <td>打分日期</td>
+                                <th>打分日期</th>
                                 <td colspan="1"><?php echo $rows["sco_dateTime"];?>&nbsp;</td>
                             </tr>
                             <?php
@@ -61,11 +61,11 @@ WHERE tbl_score.sco_stu_ID='".$_GET["stu"]."'";
                         while($rows=mysqli_fetch_assoc($resS)){
                             ?>
                             <tr align="center">
-                                <td>成绩</td>
+                                <th>成绩</th>
                                 <td colspan="1">&nbsp;<?php echo $rows["sco_score"];?></td>
-                                <td>老师</td>
+                                <th>老师</th>
                                 <td colspan="1"><?php echo $rows["tea_name"];?>&nbsp;</td>
-                                <td>打分日期</td>
+                                <th>打分日期</th>
                                 <td colspan="1"><?php echo $rows["sco_dateTime"];?>&nbsp;</td>
                             </tr>
                             <?php

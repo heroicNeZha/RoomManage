@@ -8,7 +8,7 @@
     session_id($_COOKIE["PHPSESSID"]);
     if(isset($_SESSION["right"])&&$_SESSION["right"]==0){
     if(isset($_GET["stu"])){
-    $sqlTheStudent="SELECT * FROM tbl_student WHERE tbl_student.stu_ID='".$_GET["stu"]."'";
+    $sqlTheStudent="SELECT * FROM tbl_student LEFT JOIN tbl_stu_dor ON tbl_stu_dor.stu_ID = tbl_student.stu_ID WHERE tbl_student.stu_ID='".$_GET["stu"]."'";
 
     ?>
 </head>
@@ -32,8 +32,44 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <?php
-            if($resTS=mysqli_query($db,$sqlTheStudent)){
-                include("footer_DRM_stu_table.php");
+            if($resTS=mysqli_query($db,$sqlTheStudent)) {
+            ?>
+            <div class="well">
+                <div align="center">
+                    <table width="668" border="1">
+                        <tbody>
+                        <?php
+                        if ($rowsTS=mysqli_fetch_assoc($resTS)){
+                            echo "<tr align='center'>";
+                            echo "  <td width='125'>学号</td>";
+                            echo "<td width='95'>".$_GET['stu']."</td>";
+                            echo "  <td width='82'>姓名</td>";
+                            echo "<td width='83'>".$rowsTS["stu_name"]."</td>";
+                            echo "<tr align='center'>";
+                            echo "<td>性别</td>";
+                            $sex=$rowsTS["stu_sex"]?"女":"男";
+                            echo "<td>".$sex."</td>";
+                            echo "  <td>班级</td>";
+                            echo "<td>".$rowsTS["stu_class"]."</td>";
+                            echo '</tr>';
+                            echo '<tr align="center">';
+                            echo '    <td>楼号</td>';
+                            echo '    <td colspan="">'.$rowsTS["dor_ID"].'</td>';
+                            echo '    <td>宿舍号</td>';
+                            echo '    <td colspan="">'.$rowsTS["room_ID"].'</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div><?php
+            }
+            else{
+                echo "查无此人!";
             }
             include("footer_bottom.php"); ?>
         </div>
