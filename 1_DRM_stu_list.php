@@ -84,9 +84,9 @@ INSERT INTO `tbl_stu_dor` (`stu_ID`, `dor_ID`, `room_ID`) VALUES ('$stu_ID', '$d
     </div>
     	<!--搜索框-->
     	<div class="search-well">
-                <form class="form-inline" action="search_stu.php" method="post">
+                <form class="form-inline" action="1_DRM_stu_detail.php" method="get">
                     <input class="input-xlarge" name="stu" placeholder="根据学号查询" id="appendedInputButton" type="text">
-                    <input class="btn" type="submit" name="submit" value="查询">
+                    <input class="btn" type="submit" value="查询">
                 </form>
      	</div>
 	</div>

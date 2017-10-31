@@ -20,19 +20,18 @@ if(isset($_SESSION["right"]) &&$_SESSION["right"]==2&& $_SESSION["un"]==$_GET["L
             <table width="996">
                 <tbody>
                 <?php
-                /*
-                $sqlNews="SELECT * FROM news ORDER BY NewsDate DESC ";
+                $sqlNews="SELECT * FROM tbl_news ORDER BY news_date DESC ";
                 if($resN=mysqli_query($db,$sqlNews)){
                     while ($rowsN=mysqli_fetch_assoc($resN)){
                         echo '<tr>';
-                        echo '<td width="738"><a href="#">'.$rowsN["NewsTitle"].'</a></td>';
-                        echo '<td width="242">'.$rowsN["NewsDate"].'</td>';
+                        echo '<td width="738"><a href="#">'.$rowsN["news_title"].'</a></td>';
+                        echo '<td width="242">'.$rowsN["news_date"].'</td>';
                         echo '</tr>';
                         echo '<tr>';
-                        echo '<td width="980">'.$rowsN["NewsContent"].'</td>';
+                        echo '<td width="980">'.$rowsN["news_content"].'</td>';
                         echo '</tr>';
                     }
-                }*/
+                }
                 ?>
                 </tbody>
             </table>

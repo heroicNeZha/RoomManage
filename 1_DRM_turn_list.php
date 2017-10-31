@@ -107,12 +107,14 @@ INSERT INTO `tbl_update` (`stu_ID`,`stu_name`,`dor_ID`, `room_ID`, `upd_type`,`u
                 <button class="btn btn-primary"><a href="#turnOut" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-minus"></i>退寝</font></a></button>
             </div>
             <!--搜索框-->
+            <!--
             <div class="search-well">
                 <form class="form-inline" action="search_feed.php" method="post">
                     <input class="input-xlarge" placeholder="根据寝室号查询" id="appendedInputButton" type="text" name="dor">
                     <input class="btn" type="submit" name="submit" value="查询">
                 </form>
             </div>
+            -->
         </div>
 
     </div>

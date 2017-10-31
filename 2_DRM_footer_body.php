@@ -14,7 +14,7 @@
          <li><a href="2_DRM_index.php">首页</a></li>
          <li><a href="2_DRM_score_list.php">查寝管理</a></li>
          <li><a href="2_DRM_stu_list.php">学生信息</a></li>
-         <li><a href="reset-password.php">重置密码</a></li>
+         <li><a href="reset-password.php?fix=tea">重置密码</a></li>
          <li><a href="logout.php">退出</a></li>
   </div>
        

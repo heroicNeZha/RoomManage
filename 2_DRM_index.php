@@ -8,11 +8,39 @@
        session_id($_COOKIE["PHPSESSID"]);
 if(isset($_SESSION["right"]) &&$_SESSION["right"]==1){
     if(isset($_POST["submit"])&&$_POST["submit"]){
-        $dt = new DateTime();
-        $dt->format('Y-m-d H:i:s');
-        $sqlAddNews="INSERT INTO `news` (`NewsId`, `NewsTitle`, `NewsContent`, `NewsDate`) VALUES (NULL, '".$_POST["title"]."', '".$_POST["content"]."', '".date('Y-m-d H:i:s')."')";
-if(mysqli_query($db,$sqlAddNews)){
-}
+        if( $_POST["submit"]=="发布") {
+            $sqlAddNews = "INSERT INTO `tbl_news` VALUES (NULL , '" . $_SESSION["tea_ID"] . "', '" . $_POST['news_title'] . "', '" . $_POST["news_content"] . "', '" . date('y-m-d') . "')";
+        if (mysqli_query($db, $sqlAddNews)){?>
+            <script>
+                alert("发布成功");
+            </script>
+        <?php
+        } else {
+        echo $sqlAddNews;
+        ?>
+            <script>
+                alert("数据异常");
+            </script>
+        <?php
+        }
+        }
+        elseif($_POST["submit"]=="删除"){
+        $sqlAddNews = "DELETE FROM tbl_news WHERE news_ID = ".$_POST["news_ID"];
+        if (mysqli_query($db, $sqlAddNews)) {
+        ?>
+            <script>
+                alert("删除成功");
+            </script>
+        <?php
+        } else {
+        echo $sqlAddNews;
+        ?>
+            <script>
+                alert("数据异常");
+            </script>
+            <?php
+        }
+        }
     }   ?>
 
   </head>
@@ -53,26 +81,24 @@ if(mysqli_query($db,$sqlAddNews)){
                   <table width="996">
                       <tbody>
                       <?php
-                      $sqlNews="SELECT * FROM news ORDER BY NewsDate DESC ";
+                      $sqlNews="SELECT * FROM tbl_news ORDER BY news_date DESC ";
                       if($resN=mysqli_query($db,$sqlNews)){
                           while ($rowsN=mysqli_fetch_assoc($resN)){
                                 echo '<tr>';
-                                echo '<td width="738"><a href="#">'.$rowsN["NewsTitle"].'</a></td>';
+                                echo '<td width="738"><a href="#">'.$rowsN["news_title"].'</a></td>';
                               echo '<td width="242"></td>';
                               echo '<td width="242"></td>';
                               echo '<td width="242"></td>';
-                              echo '<td width="242">'.$rowsN["NewsDate"].'</td>';
-
+                              echo '<td width="242">'.$rowsN["news_date"].'</td>';
                                 echo '</tr>';
                               echo '<tr>';
-                              echo '<td width="980">'.$rowsN["NewsContent"].'</td>';
+                              echo '<td width="980">'.$rowsN["news_content"].'</td>';
                               echo '<td width="242"></td>';
                               echo '<td width="242"></td>';
                               echo '<td width="242"></td>';
                               ?><td>
-                              <form action="del.php" method="post">
-                                  <input type="hidden" name="NewsId" value="<?php echo $rowsN["NewsId"];?>">
-                                  <input type="hidden" name="type" value="new">
+                              <form action="2_DRM_index.php" method="post">
+                                  <input type="hidden" name="news_ID" value="<?php echo $rowsN["news_ID"];?>">
                                   <input type="submit" class="btn btn-danger" onclick="return confirm('确定要删除吗?');" name="submit" value="删除">
                               </form></td>
                               <?php
@@ -88,23 +114,23 @@ if(mysqli_query($db,$sqlAddNews)){
           </div>
 
           <!--发布信息-->
-          <div class="modal small hide fade" id="publish" tabindex="10" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal small hide fade" id="publish" tabindex="10" role="dialog" aria-labelledby="myModalLabel"
+               aria-hidden="true">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   <h3 id="myModalLabel">发布信息</h3>
               </div>
               <div class="modal-body">
-                  <form id="tab" action="1_DRM_index.php" method="post">
+                  <form id="tab" action="2_DRM_index.php" method="post">
                       <label>标题</label>
-                      <input type="text" name="title" id="name" value="张三" class="input-xlarge">
+                      <input type="text" name="news_title" id="news_title" value="" class="input-xlarge">
                       <label>内容</label>
-                      <textarea name="content"></textarea>
+                      <textarea name="news_content"></textarea>
                       <div class="modal-footer">
                           <button class="btn" id="btn_change_cancle" data-dismiss="modal" aria-hidden="true">取消</button>
-                          <input type="submit" name="submit" class="btn btn-danger" id="btn_change_sava"  value="发布">
+                          <input type="submit" name="submit" class="btn btn-danger" id="btn_change_sava" value="发布">
                       </div>
                   </form>
-                  <br/><br/><br/>
               </div>
 
           </div>

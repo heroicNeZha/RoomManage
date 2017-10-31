@@ -15,6 +15,6 @@
          <li><a href="1_DRM_dor_list.php">寝室管理</a></li>
          <li><a href="1_DRM_stu_list.php">学生管理</a></li>
          <li><a href="1_DRM_turn_list.php">住宿管理</a></li>
-         <li><a href="reset-password.php">重置密码</a></li>
+         <li><a href="reset-password.php?fix=admin">重置密码</a></li>
          <li><a href="logout.php">退出</a></li>
 </div>

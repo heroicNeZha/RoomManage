@@ -19,6 +19,7 @@ if(isset($_POST["submit"])&&$_POST["submit"]) {
     if ($gets = mysqli_fetch_assoc($res)) {
         echo "succsess";
         $_SESSION["right"] = 0;
+        $_SESSION["admin_ID"] = $gets["admin_ID"];
         ?>
         <script>window.location = "1_DRM_index.php?LoginName=<?php echo $gets["admin_ID"]?>";</script><?php
     }else{

@@ -55,13 +55,14 @@
             <div class="btn-toolbar">
                 <button class="btn btn-primary"><a href="#change" role="button" data-toggle="modal"><font color="#F7F8F7"><i class="icon-plus"></i>新建</font></a></button>
             </div>
-            <!--搜索框-->
+            <!--搜索框
             <div class="search-well">
                 <form class="form-inline" action="search_stu.php" method="post">
                     <input class="input-xlarge" name="stu" placeholder="根据学号查询" id="appendedInputButton" type="text">
                     <input class="btn" type="submit" name="submit" value="查询">
                 </form>
             </div>
+            -->
         </div>
 
     </div>
