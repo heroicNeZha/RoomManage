@@ -14,7 +14,6 @@
 FROM tbl_room 
 LEFT JOIN tbl_dormitory ON tbl_dormitory.dor_ID = tbl_room.dor_ID
 WHERE tbl_room.room_ID='$room_ID' AND tbl_room.dor_ID='$dor_ID'";
-
     ?>
 </head>
 <body class="">

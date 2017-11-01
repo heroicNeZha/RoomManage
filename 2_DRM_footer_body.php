@@ -3,7 +3,7 @@
                 <ul class="nav pull-right">
                     
                     <li><a href="http://www.sylu.edu.cn/sylusite/" class="hidden-phone visible-tablet visible-desktop" target="_blank" role="button">沈阳理工大学</a></li>
-                    <li><a href="1_DRM_index.php" class="hidden-phone visible-tablet visible-desktop" role="button"> 管理员</a></li>
+                    <li><a href="2_DRM_index.php" class="hidden-phone visible-tablet visible-desktop" role="button"> 教师</a></li>
                     
                 </ul>
                 <a class="brand" href="#"><span class="first"></span> <span class="second">学生寝室管理系统</span></a>
