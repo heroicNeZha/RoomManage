@@ -10,25 +10,34 @@
     if (isset($_POST["submit"]) && $_POST["submit"]) {
         $stu_ID = $_POST["stu_ID"];
         if ($_POST["submit"] == "确定") {
-            $gpa = $_POST["sco_score"] / 10.0 - 5;
-            $sco_dateTime = $_POST["sco_dateTime"];
-            $tea_ID = $_SESSION["tea_ID"];
-            $sqlInsertScore = "INSERT INTO tbl_score VALUE ($stu_ID,$gpa,'$tea_ID','$sco_dateTime')";
-            if ($resIS = mysqli_query($db, $sqlInsertScore)) {
+            if ($_POST["sco_score"] < 0 || $_POST["sco_score"] < 100) {
                 ?>
                 <script>
-                    alert("插入成功！");
+                    alert("输入分数格式不正确！");
                     window.location = "2_DRM_score_list.php";
                 </script>
             <?php
-            }else{
+            } else {
+                $gpa = $_POST["sco_score"] / 10.0 - 5;
+                $sco_dateTime = $_POST["sco_dateTime"];
+                $tea_ID = $_SESSION["tea_ID"];
+                $sqlInsertScore = "INSERT INTO tbl_score VALUE ($stu_ID,$gpa,'$tea_ID','$sco_dateTime')";
+                if ($resIS = mysqli_query($db, $sqlInsertScore)) {
+                    ?>
+                    <script>
+                        alert("插入成功！");
+                        window.location = "2_DRM_score_list.php";
+                    </script>
+                <?php
+                }else{
                 echo $sqlInsertScore;
                 ?>
-                <script>
-                    alert("数据异常！");
-                    window.location = "2_DRM_score_list.php";
-                </script>
-                <?php
+                    <script>
+                        alert("数据异常！");
+                        window.location = "2_DRM_score_list.php";
+                    </script>
+                    <?php
+                }
             }
         }
         else if ($_POST["submit"] == "删除") {
@@ -43,11 +52,11 @@
 
 <div class="content">
     <div class="header">
-        <h1 class="page-title">学生信息</h1>
+        <h1 class="page-title">查寝管理</h1>
     </div>
 
     <ul class="breadcrumb">
-        <li><a href="1_DRM_index.php">返回首页</a> /<span class="divider">学生信息</span></li>
+        <li><a href="1_DRM_index.php">返回首页</a> /<span class="divider">查寝管理</span></li>
     </ul>
 
     <div class="container-fluid">
